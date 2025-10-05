@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Daur MedIA - Веб-интерфейс для HunyuanVideo
-Локальный веб-сервер для генерации видео без сторонних API
+Daur MedIA - AI Video Generation Platform
+Локальный веб-сервер для генерации видео с помощью HunyuanVideo
 """
 
 import os
@@ -30,7 +30,7 @@ HTML_TEMPLATE = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daur MedIA - HunyuanVideo Generator</title>
+    <title>Daur MedIA - AI Video Generation Platform</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <style>
@@ -79,7 +79,7 @@ HTML_TEMPLATE = """
                         <i data-lucide="video" class="w-6 h-6 text-purple-600"></i>
                     </div>
                     <h1 class="text-2xl font-bold text-white">Daur MedIA</h1>
-                    <span class="text-sm text-white opacity-75">HunyuanVideo Generator</span>
+                    <span class="text-sm text-white opacity-75">AI Video Generation Platform</span>
                 </div>
                 <div class="flex items-center space-x-4">
                     <div id="statusIndicator" class="flex items-center space-x-2">
@@ -99,10 +99,10 @@ HTML_TEMPLATE = """
         <!-- Hero Section -->
         <div class="text-center mb-12">
             <h2 class="text-5xl font-bold text-white mb-6">
-                Создавайте видео с HunyuanVideo
+                Daur MedIA - Создавайте видео с ИИ
             </h2>
             <p class="text-xl text-white text-opacity-80 max-w-2xl mx-auto">
-                Локальная генерация видео с помощью передовой модели HunyuanVideo от Tencent без использования сторонних API
+                Мощная платформа для генерации видео с помощью искусственного интеллекта. Локальная обработка, полный контроль, профессиональные результаты.
             </p>
         </div>
 
