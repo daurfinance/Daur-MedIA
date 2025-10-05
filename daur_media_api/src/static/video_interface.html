@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daur MedIA - AI Генерация Видео</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .animate-pulse-slow {
+            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        .robot-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .status-pending { @apply bg-yellow-100 text-yellow-800; }
+        .status-processing { @apply bg-blue-100 text-blue-800; }
+        .status-completed { @apply bg-green-100 text-green-800; }
+        .status-failed { @apply bg-red-100 text-red-800; }
+    </style>
+</head>
+<body class="min-h-screen gradient-bg">
+    <!-- Header -->
+    <header class="glass-effect">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center robot-animation">
+                        <i data-lucide="video" class="w-6 h-6 text-purple-600"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold text-white">Daur MedIA</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="langToggle" class="glass-effect px-4 py-2 rounded-lg text-white hover:bg-white hover:bg-opacity-20 transition-all">
+                        <span id="langText">EN</span>
+                    </button>
+                    <button id="statusBtn" class="glass-effect px-4 py-2 rounded-lg text-white hover:bg-white hover:bg-opacity-20 transition-all">
+                        <i data-lucide="activity" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12">
+        <!-- Hero Section -->
+        <div class="text-center mb-12">
+            <h2 class="text-5xl font-bold text-white mb-6" data-i18n="hero.title">
+                Создавайте видео с помощью ИИ
+            </h2>
+            <p class="text-xl text-white text-opacity-80 max-w-2xl mx-auto" data-i18n="hero.subtitle">
+                Превратите ваши идеи в потрясающие видео с помощью передовой технологии HunyuanVideo от Tencent
+            </p>
+        </div>
+
+        <!-- Video Generation Form -->
+        <div class="max-w-4xl mx-auto">
+            <div class="glass-effect rounded-2xl p-8 mb-8">
+                <form id="videoForm" class="space-y-6">
+                    <div>
+                        <label for="prompt" class="block text-white font-medium mb-3" data-i18n="form.prompt.label">
+                            Описание видео
+                        </label>
+                        <textarea 
+                            id="prompt" 
+                            name="prompt" 
+                            rows="4" 
+                            class="w-full px-4 py-3 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white placeholder-white placeholder-opacity-60 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
+                            placeholder="Например: Кот идет по траве, реалистичный стиль"
+                            data-i18n-placeholder="form.prompt.placeholder"
+                            required
+                        ></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label for="video_width" class="block text-white font-medium mb-2" data-i18n="form.width.label">
+                                Ширина
+                            </label>
+                            <input 
+                                type="number" 
+                                id="video_width" 
+                                name="video_width" 
+                                value="1280" 
+                                min="256" 
+                                max="1920"
+                                class="w-full px-4 py-2 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
+                            >
+                        </div>
+                        <div>
+                            <label for="video_height" class="block text-white font-medium mb-2" data-i18n="form.height.label">
+                                Высота
+                            </label>
+                            <input 
+                                type="number" 
+                                id="video_height" 
+                                name="video_height" 
+                                value="720" 
+                                min="256" 
+                                max="1080"
+                                class="w-full px-4 py-2 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
+                            >
+                        </div>
+                        <div>
+                            <label for="infer_steps" class="block text-white font-medium mb-2" data-i18n="form.steps.label">
+                                Шаги
+                            </label>
+                            <input 
+                                type="number" 
+                                id="infer_steps" 
+                                name="infer_steps" 
+                                value="50" 
+                                min="10" 
+                                max="100"
+                                class="w-full px-4 py-2 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
+                            >
+                        </div>
+                    </div>
+
+                    <button 
+                        type="submit" 
+                        id="generateBtn"
+                        class="w-full bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-300 flex items-center justify-center space-x-3"
+                    >
+                        <i data-lucide="play" class="w-5 h-5"></i>
+                        <span data-i18n="form.generate">Создать видео</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Tasks List -->
+            <div class="glass-effect rounded-2xl p-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-2xl font-bold text-white" data-i18n="tasks.title">Мои задачи</h3>
+                    <button 
+                        id="refreshBtn"
+                        class="glass-effect px-4 py-2 rounded-lg text-white hover:bg-white hover:bg-opacity-20 transition-all"
+                    >
+                        <i data-lucide="refresh-cw" class="w-5 h-5"></i>
+                    </button>
+                </div>
+                <div id="tasksList" class="space-y-4">
+                    <!-- Tasks will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Status Modal -->
+    <div id="statusModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="glass-effect rounded-2xl p-8 max-w-md w-full mx-4">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-xl font-bold text-white" data-i18n="status.title">Статус системы</h3>
+                <button id="closeStatusModal" class="text-white hover:text-gray-300">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div id="statusContent" class="text-white">
+                <!-- Status content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="fixed top-4 right-4 glass-effect rounded-lg p-4 text-white transform translate-x-full transition-transform duration-300 z-50">
+        <div class="flex items-center space-x-3">
+            <i data-lucide="check-circle" class="w-5 h-5"></i>
+            <span id="notificationText"></span>
+        </div>
+    </div>
+
+    <script src="video_app.js"></script>
+</body>
+</html>
