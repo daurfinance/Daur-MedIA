@@ -1,0 +1,49 @@
+# Daur MedIA - HunyuanVideo Generator Requirements
+
+# Веб-фреймворк
+Flask==2.3.3
+Werkzeug==2.3.7
+
+# Машинное обучение и обработка данных
+torch>=2.0.0
+torchvision>=0.15.0
+torchaudio>=2.0.0
+transformers>=4.30.0
+diffusers>=0.20.0
+accelerate>=0.20.0
+
+# Обработка изображений и видео
+opencv-python>=4.8.0
+Pillow>=10.0.0
+imageio>=2.31.0
+imageio-ffmpeg>=0.4.8
+
+# Научные вычисления
+numpy>=1.24.0
+scipy>=1.10.0
+
+# Утилиты
+tqdm>=4.65.0
+omegaconf>=2.3.0
+einops>=0.6.0
+safetensors>=0.3.0
+
+# Дополнительные зависимости для HunyuanVideo
+xformers>=0.0.20  # Для оптимизации внимания (опционально)
+flash-attn>=2.0.0  # Для быстрого внимания (опционально, требует CUDA)
+
+# Для работы с моделями Hugging Face
+huggingface-hub>=0.16.0
+
+# Для обработки конфигураций
+pyyaml>=6.0
+
+# Для логирования
+loguru>=0.7.0
+
+# Для работы с файлами
+pathlib2>=2.3.7
+
+# Дополнительные утилиты
+requests>=2.31.0
+packaging>=23.0
